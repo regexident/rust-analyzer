@@ -3064,6 +3064,10 @@ impl Type {
         matches!(&self.ty.kind(Interner), TyKind::Array(..))
     }
 
+    pub fn is_tuple(&self) -> bool {
+        matches!(&self.ty.kind(Interner), TyKind::Tuple(..))
+    }
+
     pub fn is_packed(&self, db: &dyn HirDatabase) -> bool {
         let adt_id = match *self.ty.kind(Interner) {
             TyKind::Adt(hir_ty::AdtId(adt_id), ..) => adt_id,
