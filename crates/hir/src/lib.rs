@@ -112,7 +112,7 @@ pub use {
         import_map,
         nameres::ModuleSource,
         path::{ModPath, PathKind},
-        type_ref::{Mutability, TypeRef},
+        type_ref::{Mutability, Rawness, TypeRef},
         visibility::Visibility,
     },
     hir_expand::{
@@ -2888,6 +2888,12 @@ impl Type {
         let (ty, _lt, m) = self.ty.as_reference()?;
         let m = Mutability::from_mutable(matches!(m, hir_ty::Mutability::Mut));
         Some((self.derived(ty.clone()), m))
+    }
+
+    pub fn as_reference_or_ptr(&self) -> Option<(Type, Rawness, Mutability)> {
+        let (ty, rawness, m) = self.ty.as_reference_or_ptr()?;
+        let m = Mutability::from_mutable(matches!(m, hir_ty::Mutability::Mut));
+        Some((self.derived(ty.clone()), rawness, m))
     }
 
     pub fn is_slice(&self) -> bool {
