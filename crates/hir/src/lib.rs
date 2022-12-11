@@ -108,6 +108,7 @@ pub use {
         adt::StructKind,
         attr::{Attr, Attrs, AttrsWithOwner, Documentation},
         builtin_attr::AttributeTemplate,
+        builtin_type::{BuiltinFloat, BuiltinInt, BuiltinUint},
         find_path::PrefixKind,
         import_map,
         nameres::ModuleSource,
@@ -1939,6 +1940,27 @@ impl BuiltinType {
 
     pub fn is_str(&self) -> bool {
         matches!(self.inner, hir_def::builtin_type::BuiltinType::Str)
+    }
+
+    pub fn as_int(&self) -> Option<BuiltinInt> {
+        match self.inner {
+            hir_def::builtin_type::BuiltinType::Int(int) => Some(int),
+            _ => None,
+        }
+    }
+
+    pub fn as_uint(&self) -> Option<BuiltinUint> {
+        match self.inner {
+            hir_def::builtin_type::BuiltinType::Uint(uint) => Some(uint),
+            _ => None,
+        }
+    }
+
+    pub fn as_float(&self) -> Option<BuiltinFloat> {
+        match self.inner {
+            hir_def::builtin_type::BuiltinType::Float(float) => Some(float),
+            _ => None,
+        }
     }
 }
 
