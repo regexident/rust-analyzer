@@ -3343,6 +3343,10 @@ impl Type {
         self.ty.dyn_trait().map(Into::into)
     }
 
+    pub fn as_generic_def<'a>(&self, db: &'a dyn HirDatabase) -> Option<GenericDef> {
+        self.ty.as_generic_def(db).map(Into::into)
+    }
+
     /// If a type can be represented as `dyn Trait`, returns all traits accessible via this type,
     /// or an empty iterator otherwise.
     pub fn applicable_inherent_traits<'a>(
